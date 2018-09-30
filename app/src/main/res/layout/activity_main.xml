@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/srmuniv">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="50dp"
+        android:layout_y="20dp"
+        android:text="Student Database"
+        android:textSize="30sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="20dp"
+        android:layout_y="110dp"
+        android:text="Enter Rollno:"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/Rollno"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_x="175dp"
+        android:layout_y="100dp"
+        android:inputType="text"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="20dp"
+        android:layout_y="160dp"
+        android:text="Enter Name:"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/Name"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_x="175dp"
+        android:layout_y="150dp"
+        android:inputType="text"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="20dp"
+        android:layout_y="210dp"
+        android:text="Enter Attendance:"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/Att"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_x="175dp"
+        android:layout_y="200dp"
+        android:inputType="number"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/Insert"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_x="195dp"
+        android:layout_y="305dp"
+        android:text="Insert"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/Delete"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_x="14dp"
+        android:layout_y="372dp"
+        android:text="Delete"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/Update"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_x="18dp"
+        android:layout_y="304dp"
+        android:text="Update"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/View"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_x="197dp"
+        android:layout_y="448dp"
+        android:text="View"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/ViewAll"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_x="13dp"
+        android:layout_y="448dp"
+        android:gravity="center"
+        android:text="View All"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/ClearDatabase"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_x="195dp"
+        android:layout_y="372dp"
+        android:gravity="center"
+        android:text="Clear All"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/lessAtt"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_x="103dp"
+        android:layout_y="505dp"
+        android:gravity="center"
+        android:text="Students With Less Att"
+        android:textSize="20dp" />
+
+</AbsoluteLayout>
