@@ -122,10 +122,38 @@
         android:id="@+id/lessAtt"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_x="103dp"
+        android:layout_x="17dp"
         android:layout_y="505dp"
         android:gravity="center"
         android:text="Students With Less Att"
         android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/sendmail"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_x="195dp"
+        android:layout_y="517dp"
+        android:gravity="center"
+        android:text="Send Email"
+        android:textSize="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="20dp"
+        android:layout_y="260dp"
+        android:text="Enter Email Addr: "
+        android:textSize="20sp" />
+
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_x="175dp"
+        android:layout_y="250dp"
+        android:inputType="text"
+        android:textSize="20sp" />
 
 </AbsoluteLayout>

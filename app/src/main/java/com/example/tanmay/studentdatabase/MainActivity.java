@@ -3,6 +3,7 @@ package com.example.tanmay.studentdatabase;
 import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -13,9 +14,10 @@ import android.widget.EditText;
 
 public class MainActivity extends Activity implements OnClickListener
 {
-    EditText Rollno,Name,Att;
-    Button Insert,Delete,Update,View,ViewAll,ClearAll,lessAtt;
+    EditText Rollno,Name,Att,Email;
+    Button Insert,Delete,Update,View,ViewAll,ClearAll,lessAtt,SendMail;
     SQLiteDatabase db;
+    String str ="";
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -26,6 +28,7 @@ public class MainActivity extends Activity implements OnClickListener
         Rollno=(EditText)findViewById(R.id.Rollno);
         Name=(EditText)findViewById(R.id.Name);
         Att=(EditText)findViewById(R.id.Att);
+        Email=(EditText)findViewById(R.id.email);
         Insert=(Button)findViewById(R.id.Insert);
         Delete=(Button)findViewById(R.id.Delete);
         Update=(Button)findViewById(R.id.Update);
@@ -33,6 +36,7 @@ public class MainActivity extends Activity implements OnClickListener
         ViewAll=(Button)findViewById(R.id.ViewAll);
         ClearAll=(Button)findViewById(R.id.ClearDatabase);
         lessAtt=(Button)findViewById(R.id.lessAtt);
+        SendMail=(Button)findViewById(R.id.sendmail);
 
         Insert.setOnClickListener(this);
         Delete.setOnClickListener(this);
@@ -41,10 +45,13 @@ public class MainActivity extends Activity implements OnClickListener
         ViewAll.setOnClickListener(this);
         ClearAll.setOnClickListener(this);
         lessAtt.setOnClickListener(this);
+        Email.setOnClickListener(this);
+        SendMail.setOnClickListener(this);
+
 
         // Creating database and table
         db=openOrCreateDatabase("StudentDB", Context.MODE_PRIVATE, null);
-        db.execSQL("CREATE TABLE IF NOT EXISTS student(rollno VARCHAR,name VARCHAR,att VARCHAR);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS student(rollno VARCHAR,name VARCHAR,att VARCHAR,email VARCHAR);");
     }
     public void onClick(View view)
     {
@@ -54,13 +61,14 @@ public class MainActivity extends Activity implements OnClickListener
             // Checking for empty fields
             if(Rollno.getText().toString().trim().length()==0||
                     Name.getText().toString().trim().length()==0||
-                    Att.getText().toString().trim().length()==0)
+                    Att.getText().toString().trim().length()==0||
+                    Email.getText().toString().trim().length()==0 )
             {
                 showMessage("Error", "Please enter all values");
                 return;
             }
             db.execSQL("INSERT INTO student VALUES('"+Rollno.getText()+"','"+Name.getText()+
-                    "','"+Att.getText()+"');");
+                    "','"+Att.getText()+"','"+Email.getText()+"');");
             showMessage("Success", "Record added");
             clearText();
         }
@@ -97,12 +105,12 @@ public class MainActivity extends Activity implements OnClickListener
             Cursor c=db.rawQuery("SELECT * FROM student WHERE rollno='"+Rollno.getText()+"'", null);
             if(c.moveToFirst()) {
                 db.execSQL("UPDATE student SET name='" + Name.getText() + "',att='" + Att.getText() +
-                        "' WHERE rollno='"+Rollno.getText()+"'");
+                        "',email='" + Email.getText() + "' WHERE rollno='"+Rollno.getText()+"'");
                 showMessage("Success", "Record Modified");
             }
             else {
                 showMessage("Error", "Invalid Rollno");
-            }
+            }// invalid entry
             clearText();
         }
         // Display a record from the Student table
@@ -119,6 +127,7 @@ public class MainActivity extends Activity implements OnClickListener
             {
                 Name.setText(c.getString(1));
                 Att.setText(c.getString(2));
+                Email.setText(c.getString(3));
             }
             else
             {
@@ -141,6 +150,7 @@ public class MainActivity extends Activity implements OnClickListener
                 buffer.append("Rollno: "+c.getString(0)+"\n");
                 buffer.append("Name: "+c.getString(1)+"\n");
                 buffer.append("Attendance: "+c.getString(2)+"\n\n");
+                buffer.append("Email Address: "+c.getString(3)+"\n\n");
             }
             showMessage("Student Details", buffer.toString());
         }
@@ -165,8 +175,25 @@ public class MainActivity extends Activity implements OnClickListener
                 buffer.append("Rollno: "+c.getString(0)+"\n");
                 buffer.append("Name: "+c.getString(1)+"\n");
                 buffer.append("Attendance: "+c.getString(2)+"\n\n");
+                buffer.append("Email Address: "+c.getString(3)+"\n\n\n");
             }
             showMessage("Student Details", buffer.toString());
+        }
+        //send email to students with less than 75 percent attendance
+        if(view==SendMail)
+        {
+            Cursor c=db.rawQuery("SELECT email FROM student WHERE att<'75'", null);
+            if(c.getCount()==0)
+            {
+                showMessage("SORRY :(", "No student has attendance less than 75 percent");
+                return;
+            }
+
+                while(c.moveToNext()){
+                    str = str+c.getString(0)+",";
+                }
+                sendMail(str);
+                str="";
         }
     }
     public void showMessage(String title,String message)
@@ -182,7 +209,24 @@ public class MainActivity extends Activity implements OnClickListener
         Rollno.setText("");
         Name.setText("");
         Att.setText("");
+        Email.setText("");
         Rollno.requestFocus();
+    }
+
+    private void sendMail(String str) {
+        String recipientList = str;
+        String[] recipients = recipientList.split(",");
+
+        String subject = "test subject";
+        String message = "test body";
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_EMAIL, recipients);
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT, message);
+
+        intent.setType("message/rfc822");
+        startActivity(Intent.createChooser(intent, "Choose an email client"));
     }
 }
 
