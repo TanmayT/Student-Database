@@ -51,7 +51,9 @@ public class MainActivity extends Activity implements OnClickListener
 
         // Creating database and table
         db=openOrCreateDatabase("StudentDB", Context.MODE_PRIVATE, null);
+
         db.execSQL("CREATE TABLE IF NOT EXISTS student(rollno VARCHAR,name VARCHAR,att VARCHAR,email VARCHAR);");
+
     }
     public void onClick(View view)
     {
@@ -72,6 +74,7 @@ public class MainActivity extends Activity implements OnClickListener
             showMessage("Success", "Record added");
             clearText();
         }
+
         // Deleting a record from the Student table
         if(view==Delete)
         {
@@ -93,6 +96,7 @@ public class MainActivity extends Activity implements OnClickListener
             }
             clearText();
         }
+
         // Updating a record in the Student table
         if(view==Update)
         {
@@ -113,6 +117,7 @@ public class MainActivity extends Activity implements OnClickListener
             }// invalid entry
             clearText();
         }
+
         // Display a record from the Student table
         if(view==View)
         {
@@ -135,6 +140,7 @@ public class MainActivity extends Activity implements OnClickListener
                 clearText();
             }
         }
+
         // Displaying all the records
         if(view==ViewAll)
         {
@@ -154,12 +160,14 @@ public class MainActivity extends Activity implements OnClickListener
             }
             showMessage("Student Details", buffer.toString());
         }
+
         // clean full database
         if(view==ClearAll)
         {
             db.execSQL("delete from "+"student");
             showMessage("Success", "Database Cleared");
         }
+
         //students with attendance less than 75 percent
         if(view==lessAtt)
         {
@@ -179,6 +187,7 @@ public class MainActivity extends Activity implements OnClickListener
             }
             showMessage("Student Details", buffer.toString());
         }
+
         //send email to students with less than 75 percent attendance
         if(view==SendMail)
         {
@@ -196,7 +205,8 @@ public class MainActivity extends Activity implements OnClickListener
                 str="";
         }
     }
-    public void showMessage(String title,String message)
+
+    private void showMessage(String title,String message)
     {
         Builder builder=new Builder(this);
         builder.setCancelable(true);
@@ -204,7 +214,8 @@ public class MainActivity extends Activity implements OnClickListener
         builder.setMessage(message);
         builder.show();
     }
-    public void clearText()
+
+    private void clearText()
     {
         Rollno.setText("");
         Name.setText("");
@@ -217,16 +228,14 @@ public class MainActivity extends Activity implements OnClickListener
         String recipientList = str;
         String[] recipients = recipientList.split(",");
 
-        String subject = "test subject";
-        String message = "test body";
-
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_EMAIL, recipients);
-        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-        intent.putExtra(Intent.EXTRA_TEXT, message);
+        intent.putExtra(Intent.EXTRA_SUBJECT,getString(R.string.subject));
+        intent.putExtra(Intent.EXTRA_TEXT,getString(R.string.message));
 
         intent.setType("message/rfc822");
         startActivity(Intent.createChooser(intent, "Choose an email client"));
     }
+
 }
 

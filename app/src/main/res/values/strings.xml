@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">StudentDatabase</string>
+    <string name="subject">Attendance of your ward</string>
+    <string name="message">Please ensure that your ward is regular to classes as his/her attendance is less than 75 percent as of now</string>
 </resources>
